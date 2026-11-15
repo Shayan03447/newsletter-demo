@@ -1,0 +1,22 @@
+{
+  "_note": "PLACEHOLDER brand - replace name, colors, logo, address with real values.",
+  "name": "Your Brand",
+  "tagline": "Insights worth your inbox",
+  "colors": {
+    "primary": "#1F4FD8",
+    "accent": "#F5A623",
+    "ink": "#1A1F2B",
+    "muted": "#6B7280",
+    "bg": "#F3F4F8",
+    "card": "#FFFFFF"
+  },
+  "fonts": {
+    "heading": "Georgia, 'Times New Roman', serif",
+    "body": "-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif"
+  },
+  "logo_url": "",
+  "footer": {
+    "address": "123 Example Street, City, Country",
+    "unsubscribe_url": "{{unsubscribe_url}}"
+  }
+}

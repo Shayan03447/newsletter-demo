@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>{{ c.subject }}</title>
+<style>
+  body { margin:0; padding:0; background:{{ b.colors.bg }}; font-family:{{ b.fonts.body|safe }}; color:{{ b.colors.ink }}; }
+  .wrap { width:100%; background:{{ b.colors.bg }}; }
+  .container { width:600px; max-width:100%; margin:0 auto; }
+  .card { background:{{ b.colors.card }}; }
+  h1, h2 { font-family:{{ b.fonts.heading|safe }}; margin:0; }
+  h1 { font-size:30px; line-height:1.2; color:#ffffff; }
+  h2 { font-size:22px; line-height:1.3; color:{{ b.colors.ink }}; padding-bottom:8px; }
+  p { font-size:16px; line-height:1.65; margin:0 0 14px 0; }
+  a { color:{{ b.colors.primary }}; }
+  .muted { color:{{ b.colors.muted }}; font-size:13px; }
+  .stat { font-family:{{ b.fonts.heading|safe }}; font-size:34px; font-weight:bold; color:{{ b.colors.primary }}; }
+  img { border:0; display:block; max-width:100%; height:auto; }
+  @media (prefers-color-scheme: dark) {
+    body, .wrap { background:#0F1115 !important; }
+    .card { background:#1A1D24 !important; }
+    h2, p, .ink { color:#E8EAF0 !important; }
+  }
+  @media only screen and (max-width:620px) {
+    .pad { padding:20px !important; }
+    h1 { font-size:24px !important; }
+  }
+</style>
+</head>
+<body>
+<div style="display:none;max-height:0;overflow:hidden;opacity:0;">{{ c.preheader }}</div>
+<table role="presentation" class="wrap" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:24px 12px;">
+<table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0">
+
+  <!-- Header -->
+  <tr><td class="pad" style="background:{{ b.colors.primary }};padding:36px 32px;border-radius:12px 12px 0 0;">
+    <p style="margin:0 0 10px 0;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:{{ b.colors.accent }};">{{ b.name }} &middot; {{ c.date }}</p>
+    <h1>{{ c.headline }}</h1>
+    {% if c.subhead %}<p style="color:#dbe4ff;margin:12px 0 0 0;">{{ c.subhead }}</p>{% endif %}
+  </td></tr>
+
+  <!-- Intro -->
+  <tr><td class="pad card" style="padding:28px 32px 8px 32px;">
+    <p>{{ c.intro }}</p>
+  </td></tr>
+
+  {% if c.key_stats %}
+  <tr><td class="pad card" style="padding:8px 32px 16px 32px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+    {% for s in c.key_stats %}
+      <td width="{{ (100 / c.key_stats|length)|int }}%" valign="top" style="padding:12px;border-top:3px solid {{ b.colors.accent }};">
+        <div class="stat">{{ s.value }}</div>
+        <div class="muted">{{ s.label }}</div>
+      </td>
+    {% endfor %}
+    </tr></table>
+  </td></tr>
+  {% endif %}
+
+  <!-- Sections -->
+  {% for s in c.sections %}
+  <tr><td class="pad card" style="padding:16px 32px;">
+    <h2>{{ s.title }}</h2>
+    {% for para in s.paragraphs %}<p>{{ para }}</p>{% endfor %}
+    {% if s.infographic %}
+      <img src="cid:{{ s.infographic.cid }}" alt="{{ s.infographic.alt }}" width="536" style="width:100%;border-radius:8px;margin-top:8px;">
+    {% endif %}
+  </td></tr>
+  {% endfor %}
+
+  {% if c.takeaway %}
+  <tr><td class="pad card" style="padding:16px 32px 28px 32px;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+      <td style="background:{{ b.colors.bg }};border-left:4px solid {{ b.colors.accent }};padding:18px 20px;border-radius:6px;">
+        <p class="ink" style="margin:0;font-weight:bold;">Key takeaway</p>
+        <p class="ink" style="margin:6px 0 0 0;">{{ c.takeaway }}</p>
+      </td>
+    </tr></table>
+  </td></tr>
+  {% endif %}
+
+  <!-- Sources -->
+  {% if c.sources %}
+  <tr><td class="pad card" style="padding:8px 32px 24px 32px;">
+    <p class="muted" style="margin:0 0 6px 0;"><strong>Sources</strong></p>
+    {% for src in c.sources %}<p class="muted" style="margin:0 0 4px 0;">{{ loop.index }}. <a href="{{ src.url }}">{{ src.title }}</a></p>{% endfor %}
+  </td></tr>
+  {% endif %}
+
+  <!-- Footer -->
+  <tr><td class="pad" style="padding:24px 32px;text-align:center;">
+    <p class="muted" style="margin:0 0 6px 0;">{{ b.name }} &middot; {{ b.footer.address }}</p>
+    <p class="muted" style="margin:0;"><a href="{{ b.footer.unsubscribe_url }}">Unsubscribe</a></p>
+  </td></tr>
+
+</table>
+</td></tr></table>
+</body>
+</html>
